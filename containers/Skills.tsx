@@ -5,6 +5,9 @@ import { Col, Container, Row, UncontrolledTooltip } from "reactstrap";
 import DisplayLottie from "../components/DisplayLottie";
 import { skillsSection } from "../portfolio";
 
+// Utility to sanitize IDs for tooltip targets
+const makeSafeId = (str: string) => str.replace(/[^a-zA-Z0-9-_]/g, "");
+
 const Skills = () => {
   return (
     skillsSection && (
@@ -22,15 +25,16 @@ const Skills = () => {
                   <h3 className="h3 mb-2">{section.title}</h3>
                   <div className="d-flex justify-content-center flex-wrap mb-2">
                     {section.softwareSkills.map((skill, i) => {
+                      const safeId = makeSafeId(skill.skillName);
                       return (
                         <Fragment key={i}>
                           <div
                             className="icon icon-lg icon-shape shadow-sm rounded-circle m-1"
-                            id={skill.skillName.replace(/\s/g, "")}
+                            id={safeId}
                           >
-                            <Icon icon={skill.iconifyTag} data-inline="false"></Icon>
+                            <Icon icon={skill.iconifyTag} data-inline="false" />
                           </div>
-                          <UncontrolledTooltip delay={0} placement="bottom" target={skill.skillName.replace(/\s/g, "")}>
+                          <UncontrolledTooltip delay={0} placement="bottom" target={safeId}>
                             {skill.skillName}
                           </UncontrolledTooltip>
                         </Fragment>
